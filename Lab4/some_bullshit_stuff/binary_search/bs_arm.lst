@@ -1,0 +1,246 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             RESET, DATA, READONLY
+    2 00000000                 EXPORT           __Vectors
+    3 00000000         
+    4 00000000         __Vectors
+    5 00000000 10001000        DCD              0x10001000  ; stack pointer val
+                                                            ue when stack is em
+                                                            pty
+    6 00000004 00000000        DCD              Reset_Handler ; reset vector
+    7 00000008         
+    8 00000008                 ALIGN
+    9 00000008         
+   10 00000008                 AREA             mycode, CODE, READONLY
+   11 00000000                 ENTRY
+   12 00000000                 EXPORT           Reset_Handler
+   13 00000000         
+   14 00000000         Reset_Handler
+   15 00000000         
+   16 00000000 4810            LDR              R0, =ARRAY
+   17 00000002 F04F 0100       MOV              R1, #0      ;R1 = 0, i.e. low =
+                                                             0
+   18 00000006 F04F 0209       MOV              R2, #9      ;R2 = n - 1, i.e. h
+                                                            igh = n - 1
+   19 0000000A F04F 0A0B       MOV              R10, #11    ;target
+   20 0000000E         LOOP
+   21 0000000E 4291            CMP              R1, R2
+   22 00000010 DC15            BGT              NOT_FOUND
+   23 00000012         
+   24 00000012 EB01 0302       ADD              R3, R1, R2  ;R3 = low + high
+   25 00000016 F04F 0402       MOV              R4, #2
+   26 0000001A FBB3 F3F4       UDIV             R3, R3, R4  ; mid = R3/2 i.e. (
+                                                            low + high)/2
+   27 0000001E         
+   28 0000001E F850 5023       LDR              R5, [R0, R3, LSL#2] 
+                                                            ;R5 = arr[mid]
+   29 00000022         
+   30 00000022 45AA            CMP              R10, R5
+   31 00000024         
+   32 00000024 DB01            BLT              LBL1
+   33 00000026 DC04            BGT              LBL2
+   34 00000028 D007            BEQ              LBL3
+   35 0000002A         
+   36 0000002A         LBL1
+   37 0000002A F1A3 0301       SUB              R3, R3, #1
+   38 0000002E 461A            MOV              R2, R3
+   39 00000030 E004            B                NEXT
+   40 00000032         LBL2
+   41 00000032         
+   42 00000032 F103 0301       ADD              R3, R3, #1
+   43 00000036 4619            MOV              R1,R3
+   44 00000038 E000            B                NEXT
+   45 0000003A         LBL3
+   46 0000003A         
+   47 0000003A E7FE            B                LBL3
+   48 0000003C         NEXT
+   49 0000003C         
+   50 0000003C E7E7            B                LOOP
+   51 0000003E         
+   52 0000003E         NOT_FOUND
+   53 0000003E F04F 33FF       MOV              R3, #-1
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   54 00000042 E7FC            B                NOT_FOUND
+   55 00000044         
+   56 00000044 00000000        AREA             mydata, DATA, READWRITE
+   57 00000000         RESULT
+   58 00000000 00 00 00 
+              00               SPACE            4
+   59 00000004         
+   60 00000004                 AREA             constdata, DATA, READONLY
+   61 00000000         ARRAY
+   62 00000000 00000001 
+              00000002 
+              00000003 
+              00000004 
+              00000005 
+              00000006 
+              00000007 
+              00000008 
+              00000009 
+              0000000A         DCD              1,2,3,4,5,6,7,8,9,10
+   63 00000028         
+   64 00000028                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\bs_arm
+.d -o.\bs_arm.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\AR
+M\Inc\NXP\LPC17xx --predefine="__EVAL SETA 1" --list=.\bs_arm.lst BS_ARM.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 1 in file BS_ARM.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 4 in file BS_ARM.s
+   Uses
+      At line 2 in file BS_ARM.s
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+LBL1 0000002A
+
+Symbol: LBL1
+   Definitions
+      At line 36 in file BS_ARM.s
+   Uses
+      At line 32 in file BS_ARM.s
+Comment: LBL1 used once
+LBL2 00000032
+
+Symbol: LBL2
+   Definitions
+      At line 40 in file BS_ARM.s
+   Uses
+      At line 33 in file BS_ARM.s
+Comment: LBL2 used once
+LBL3 0000003A
+
+Symbol: LBL3
+   Definitions
+      At line 45 in file BS_ARM.s
+   Uses
+      At line 34 in file BS_ARM.s
+      At line 47 in file BS_ARM.s
+
+LOOP 0000000E
+
+Symbol: LOOP
+   Definitions
+      At line 20 in file BS_ARM.s
+   Uses
+      At line 50 in file BS_ARM.s
+Comment: LOOP used once
+NEXT 0000003C
+
+Symbol: NEXT
+   Definitions
+      At line 48 in file BS_ARM.s
+   Uses
+      At line 39 in file BS_ARM.s
+      At line 44 in file BS_ARM.s
+
+NOT_FOUND 0000003E
+
+Symbol: NOT_FOUND
+   Definitions
+      At line 52 in file BS_ARM.s
+   Uses
+      At line 22 in file BS_ARM.s
+      At line 54 in file BS_ARM.s
+
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 14 in file BS_ARM.s
+   Uses
+      At line 6 in file BS_ARM.s
+      At line 12 in file BS_ARM.s
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+
+mycode 00000000
+
+Symbol: mycode
+   Definitions
+      At line 10 in file BS_ARM.s
+   Uses
+      None
+Comment: mycode unused
+8 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESULT 00000000
+
+Symbol: RESULT
+   Definitions
+      At line 57 in file BS_ARM.s
+   Uses
+      None
+Comment: RESULT unused
+mydata 00000000
+
+Symbol: mydata
+   Definitions
+      At line 56 in file BS_ARM.s
+   Uses
+      None
+Comment: mydata unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+ARRAY 00000000
+
+Symbol: ARRAY
+   Definitions
+      At line 61 in file BS_ARM.s
+   Uses
+      At line 16 in file BS_ARM.s
+Comment: ARRAY used once
+constdata 00000000
+
+Symbol: constdata
+   Definitions
+      At line 60 in file BS_ARM.s
+   Uses
+      None
+Comment: constdata unused
+2 symbols
+347 symbols in table

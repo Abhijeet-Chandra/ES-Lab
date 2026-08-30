@@ -1,0 +1,2 @@
+Dependencies for Project 'BS', Target 'Target 1': (DO NOT MODIFY !)
+F (.\BS_ARM.s)(0x6A9458BE)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\NXP\LPC17xx--list .\bs_arm.lst --xref -o .\bs_arm.o --depend .\bs_arm.d)
