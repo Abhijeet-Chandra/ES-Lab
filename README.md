@@ -1,19 +1,19 @@
-# Embedded Systems Lab — Labs 2 to 5
+# Embedded Systems Lab — Labs 1 to 4
 
 This repository contains the ARM Assembly programs for **Embedded Systems Lab (ICT 3144)** based on the **2026 Embedded Systems Lab Manual**.
 
 ## Labs
 
-| Lab | Topic | Manual Pages |
+| Lab | Topic | Manual Lab | Manual Pages |
 |---|---|---:|
-| **Lab 2** | Data Transfer Programs | 10–11 |
-| **Lab 3** | Arithmetic Programs | 12–16 |
-| **Lab 4** | Code Conversion Programs | 17–18 |
-| **Lab 5** | Sorting, Searching and Stack | 19–20 |
+| **Lab 1** | Data Transfer Programs | Lab 2 | 10–11 |
+| **Lab 2** | Arithmetic Programs | Lab 3 | 12–16 |
+| **Lab 3** | Code Conversion Programs | Lab 4 | 17–18 |
+| **Lab 4** | Sorting, Searching and Stack | Lab 5 | 19–20 |
 
 ---
 
-## Lab 2 — Data Transfer Programs
+## Lab 1 — Data Transfer Programs
 
 ### Aim
 Familiarization of ARM data transfer instructions.
@@ -34,7 +34,7 @@ Familiarization of ARM data transfer instructions.
 
 ---
 
-## Lab 3 — Arithmetic Programs
+## Lab 2 — Arithmetic Programs
 
 ### Aim
 Familiarization of arithmetic operations such as addition, subtraction and multiplication.
@@ -59,7 +59,7 @@ Familiarization of arithmetic operations such as addition, subtraction and multi
 
 ---
 
-## Lab 4 — Code Conversion Programs
+## Lab 3 — Code Conversion Programs
 
 ### Aim
 Familiarization of logical instructions and code conversion programs.
@@ -86,7 +86,7 @@ Familiarization of logical instructions and code conversion programs.
 
 ---
 
-## Lab 5 — Sorting, Searching and Stack
+## Lab 4 — Sorting, Searching and Stack
 
 ### Aim
 To understand the logic of looping and sorting.
@@ -186,7 +186,7 @@ STOP
 
 Based on the **ICT 3144 Embedded Systems Lab Manual (2026)**, covering:
 
-- **Lab 2:** Data Transfer Programs
-- **Lab 3:** Arithmetic Programs
-- **Lab 4:** Code Conversion Programs
-- **Lab 5:** Programs on Sorting, Searching and Stack
+- **Lab 1:** Data Transfer Programs (Manual Lab 2)
+- **Lab 2:** Arithmetic Programs (Manual Lab 3)
+- **Lab 3:** Code Conversion Programs (Manual Lab 4)
+- **Lab 4:** Programs on Sorting, Searching and Stack (Manual Lab 5)
