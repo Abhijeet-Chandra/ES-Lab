@@ -1,0 +1,268 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             RESET, DATA, READONLY
+    2 00000000                 EXPORT           __Vectors
+    3 00000000         
+    4 00000000         __Vectors
+    5 00000000 10001000        DCD              0x10001000
+    6 00000004 00000000        DCD              Reset_Handler
+    7 00000008         
+    8 00000008                 ALIGN
+    9 00000008         
+   10 00000008                 AREA             mycode, CODE, READONLY
+   11 00000000                 ENTRY
+   12 00000000                 EXPORT           Reset_Handler
+   13 00000000         
+   14 00000000         Reset_Handler
+   15 00000000 4817            LDR              R0,=ARRAY
+   16 00000002 F04F 010A       MOV              R1, #10     ;R1 = N
+   17 00000006 F04F 0200       MOV              R2, #0      ;i = 0
+   18 0000000A 4E16            LDR              R6, =RESULT
+   19 0000000C F04F 070A       MOV              R7, #10     ; temp = N
+   20 00000010 F04F 0800       MOV              R8, #0
+   21 00000014         
+   22 00000014         ;for copying:
+   23 00000014         LOOP
+   24 00000014 F850 9008       LDR              R9, [R0, R8]
+   25 00000018 F846 9008       STR              R9, [R6, R8]
+   26 0000001C F108 0804       ADD              R8, R8, #4
+   27 00000020 1E7F            SUBS             R7, R7, #1
+   28 00000022         
+   29 00000022 D1F7            BNE              LOOP
+   30 00000024         
+   31 00000024 480F            LDR              R0, =RESULT
+   32 00000026         
+   33 00000026         OUTER
+   34 00000026 428A            CMP              R2, R1      ;i >= n ?
+   35 00000028 DA19            BGE              DONE        ;if yes, done
+   36 0000002A         
+   37 0000002A F04F 0300       MOV              R3, #0      ;j = 0
+   38 0000002E EBA1 0A02       SUB              R10, R1, R2 ;R10 = N - i
+   39 00000032 F1AA 0A01       SUB              R10, R10, #1 ;R10 = N - i - 1
+   40 00000036         
+   41 00000036         INNER
+   42 00000036         
+   43 00000036 4553            CMP              R3, R10
+   44 00000038 DA0E            BGE              NEXT_i
+   45 0000003A         
+   46 0000003A F850 4023       LDR              R4, [R0, R3, LSL#2] ;R4 = a[j]
+   47 0000003E F103 0B01       ADD              R11, R3, #1
+   48 00000042 F850 502B       LDR              R5, [R0, R11, LSL#2] 
+                                                            ;R5 = a[j+1]
+   49 00000046         
+   50 00000046 42AC            CMP              R4, R5
+   51 00000048 DD03            BLE              NEXT_j
+   52 0000004A         
+   53 0000004A F840 5023       STR              R5, [R0, R3, LSL#2] 
+                                                            ;a[j] = a[j + 1]
+   54 0000004E F840 402B       STR              R4, [R0, R11, LSL#2] 
+                                                            ;a[j+1] = old a[j]
+   55 00000052         
+   56 00000052         NEXT_j
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   57 00000052 F103 0301       ADD              R3, R3, #1
+   58 00000056         
+   59 00000056 E7EE            B                INNER
+   60 00000058         NEXT_i
+   61 00000058 F102 0201       ADD              R2, R2, #1
+   62 0000005C E7E3            B                OUTER
+   63 0000005E         
+   64 0000005E         DONE
+   65 0000005E E7FE            B                DONE
+   66 00000060         
+   67 00000060 00000000 
+              00000000 
+              00000000         AREA             mydata, DATA, READWRITE
+   68 00000000         RESULT
+   69 00000000 00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00               SPACE            40
+   70 00000028         
+   71 00000028                 AREA             constdata, DATA, READONLY
+   72 00000000         
+   73 00000000         ARRAY
+   74 00000000 00000004 
+              00000009 
+              00000008 
+              00000003 
+              00000002 
+              00000001 
+              0000000A 
+              00000007 
+              00000005 
+              00000006         DCD              4,9,8,3,2,1,10,7,5,6
+   75 00000028         
+   76 00000028                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\q1arm.
+d -o.\q1arm.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\
+Inc\NXP\LPC17xx --predefine="__EVAL SETA 1" --list=.\q1arm.lst Q1ARM.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 1 in file Q1ARM.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 4 in file Q1ARM.s
+   Uses
+      At line 2 in file Q1ARM.s
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DONE 0000005E
+
+Symbol: DONE
+   Definitions
+      At line 64 in file Q1ARM.s
+   Uses
+      At line 35 in file Q1ARM.s
+      At line 65 in file Q1ARM.s
+
+INNER 00000036
+
+Symbol: INNER
+   Definitions
+      At line 41 in file Q1ARM.s
+   Uses
+      At line 59 in file Q1ARM.s
+Comment: INNER used once
+LOOP 00000014
+
+Symbol: LOOP
+   Definitions
+      At line 23 in file Q1ARM.s
+   Uses
+      At line 29 in file Q1ARM.s
+Comment: LOOP used once
+NEXT_i 00000058
+
+Symbol: NEXT_i
+   Definitions
+      At line 60 in file Q1ARM.s
+   Uses
+      At line 44 in file Q1ARM.s
+Comment: NEXT_i used once
+NEXT_j 00000052
+
+Symbol: NEXT_j
+   Definitions
+      At line 56 in file Q1ARM.s
+   Uses
+      At line 51 in file Q1ARM.s
+Comment: NEXT_j used once
+OUTER 00000026
+
+Symbol: OUTER
+   Definitions
+      At line 33 in file Q1ARM.s
+   Uses
+      At line 62 in file Q1ARM.s
+Comment: OUTER used once
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 14 in file Q1ARM.s
+   Uses
+      At line 6 in file Q1ARM.s
+      At line 12 in file Q1ARM.s
+
+mycode 00000000
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+
+Symbol: mycode
+   Definitions
+      At line 10 in file Q1ARM.s
+   Uses
+      None
+Comment: mycode unused
+8 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESULT 00000000
+
+Symbol: RESULT
+   Definitions
+      At line 68 in file Q1ARM.s
+   Uses
+      At line 18 in file Q1ARM.s
+      At line 31 in file Q1ARM.s
+
+mydata 00000000
+
+Symbol: mydata
+   Definitions
+      At line 67 in file Q1ARM.s
+   Uses
+      None
+Comment: mydata unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+ARRAY 00000000
+
+Symbol: ARRAY
+   Definitions
+      At line 73 in file Q1ARM.s
+   Uses
+      At line 15 in file Q1ARM.s
+Comment: ARRAY used once
+constdata 00000000
+
+Symbol: constdata
+   Definitions
+      At line 71 in file Q1ARM.s
+   Uses
+      None
+Comment: constdata unused
+2 symbols
+347 symbols in table
