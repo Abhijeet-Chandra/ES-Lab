@@ -1,0 +1,288 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             RESET, DATA, READONLY
+    2 00000000                 EXPORT           __Vectors
+    3 00000000         
+    4 00000000         __Vectors
+    5 00000000 10001000        DCD              0x10001000
+    6 00000004 00000000        DCD              Reset_Handler
+    7 00000008         
+    8 00000008                 ALIGN
+    9 00000008         
+   10 00000008                 AREA             mycode, CODE, READONLY
+   11 00000000                 ENTRY
+   12 00000000                 EXPORT           Reset_Handler
+   13 00000000         
+   14 00000000         Reset_Handler
+   15 00000000         
+   16 00000000 4819            LDR              R0, =ARRAY  ;base address
+   17 00000002 F04F 010A       MOV              R1, #10     ;R1 = n
+   18 00000006 F04F 0200       MOV              R2, #0      ;i = 0
+   19 0000000A F8DF 8060       LDR              R8, =RESULT
+   20 0000000E         
+   21 0000000E F04F 0700       MOV              R7, #0      ; offset
+   22 00000012 F04F 090A       MOV              R9, #10     ; count
+   23 00000016         
+   24 00000016         COPY
+   25 00000016 59C6            LDR              R6, [R0, R7] ; R6 = ARRAY[offse
+                                                            t]
+   26 00000018 F848 6007       STR              R6, [R8, R7] ; RESULT[offset] =
+                                                             ARRAY[offset]
+   27 0000001C         
+   28 0000001C F107 0704       ADD              R7, R7, #4
+   29 00000020 F1A9 0901       SUB              R9, R9, #1
+   30 00000024 F1B9 0F00       CMP              R9, #0
+   31 00000028 D8F5            BHI              COPY
+   32 0000002A         
+   33 0000002A 4810            LDR              R0, =RESULT ; NOW sort RESULT
+   34 0000002C         
+   35 0000002C         OUTER
+   36 0000002C 428A            CMP              R2, R1      ;i >= n ?
+   37 0000002E DA19            BGE              DONE        ;if yes then its do
+                                                            ne
+   38 00000030         
+   39 00000030 4614            MOV              R4, R2
+   40 00000032         
+   41 00000032 F102 0301       ADD              R3, R2, #1  ;j = i + 1
+   42 00000036         
+   43 00000036         INNER
+   44 00000036 428B            CMP              R3, R1      ;j >= n?
+   45 00000038 DA09            BGE              SWAP        ;if yes then swap
+   46 0000003A         
+   47 0000003A F850 5023       LDR              R5, [R0, R3, LSL #2] 
+                                                            ;R5 is a[j]
+   48 0000003E F850 6024       LDR              R6, [R0, R4, LSL #2] 
+                                                            ;R6 is a[min_index]
+                                                            
+   49 00000042         
+   50 00000042 42B5            CMP              R5, R6      ;a[j] >= a[min_inde
+                                                            x]
+   51 00000044 DA00            BGE              NEXT        ;if yes then skip a
+                                                            nd go to next itera
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+                                                            tion of j
+   52 00000046         
+   53 00000046 461C            MOV              R4, R3      ;if not, then, min_
+                                                            index = j
+   54 00000048         NEXT
+   55 00000048 F103 0301       ADD              R3, R3, #1  ;j = j + 1
+   56 0000004C E7F3            B                INNER
+   57 0000004E         
+   58 0000004E         SWAP
+   59 0000004E F850 7022       LDR              R7, [R0, R2, LSL#2] ;R7 is a[i]
+                                                            
+   60 00000052 F850 6024       LDR              R6, [R0, R4, LSL#2] 
+                                                            ;R6 is a[min_index]
+                                                            
+   61 00000056 F840 6022       STR              R6, [R0, R2, LSL#2] ; a[i] = a[
+                                                            min_index]
+   62 0000005A F840 7024       STR              R7, [R0, R4, LSL#2] ; a[min_ind
+                                                            ex] = old a[i]
+   63 0000005E         
+   64 0000005E F102 0201       ADD              R2, R2, #1
+   65 00000062 E7E3            B                OUTER
+   66 00000064         DONE
+   67 00000064         
+   68 00000064 E7FE            B                DONE
+   69 00000066         
+   70 00000066 00 00 00000000 
+              00000000 
+              00000000         AREA             mydata, DATA, READWRITE
+   71 00000000         RESULT
+   72 00000000 00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00               SPACE            40
+   73 00000028         
+   74 00000028                 AREA             constdata, DATA, READONLY
+   75 00000000         ARRAY
+   76 00000000 00000007 
+              00000003 
+              00000005 
+              00000009 
+              00000001 
+              00000002 
+              00000006 
+              00000008 
+              00000004 
+              0000000A         DCD              7,3,5,9,1,2,6,8,4,10
+   77 00000028         
+   78 00000028                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\q1arm.
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+d -o.\q1arm.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\
+Inc\NXP\LPC17xx --predefine="__EVAL SETA 1" --list=.\q1arm.lst Q1ARM.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 1 in file Q1ARM.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 4 in file Q1ARM.s
+   Uses
+      At line 2 in file Q1ARM.s
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+COPY 00000016
+
+Symbol: COPY
+   Definitions
+      At line 24 in file Q1ARM.s
+   Uses
+      At line 31 in file Q1ARM.s
+Comment: COPY used once
+DONE 00000064
+
+Symbol: DONE
+   Definitions
+      At line 66 in file Q1ARM.s
+   Uses
+      At line 37 in file Q1ARM.s
+      At line 68 in file Q1ARM.s
+
+INNER 00000036
+
+Symbol: INNER
+   Definitions
+      At line 43 in file Q1ARM.s
+   Uses
+      At line 56 in file Q1ARM.s
+Comment: INNER used once
+NEXT 00000048
+
+Symbol: NEXT
+   Definitions
+      At line 54 in file Q1ARM.s
+   Uses
+      At line 51 in file Q1ARM.s
+Comment: NEXT used once
+OUTER 0000002C
+
+Symbol: OUTER
+   Definitions
+      At line 35 in file Q1ARM.s
+   Uses
+      At line 65 in file Q1ARM.s
+Comment: OUTER used once
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 14 in file Q1ARM.s
+   Uses
+      At line 6 in file Q1ARM.s
+      At line 12 in file Q1ARM.s
+
+SWAP 0000004E
+
+Symbol: SWAP
+   Definitions
+      At line 58 in file Q1ARM.s
+   Uses
+      At line 45 in file Q1ARM.s
+Comment: SWAP used once
+mycode 00000000
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+
+Symbol: mycode
+   Definitions
+      At line 10 in file Q1ARM.s
+   Uses
+      None
+Comment: mycode unused
+8 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESULT 00000000
+
+Symbol: RESULT
+   Definitions
+      At line 71 in file Q1ARM.s
+   Uses
+      At line 19 in file Q1ARM.s
+      At line 33 in file Q1ARM.s
+
+mydata 00000000
+
+Symbol: mydata
+   Definitions
+      At line 70 in file Q1ARM.s
+   Uses
+      None
+Comment: mydata unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+ARRAY 00000000
+
+Symbol: ARRAY
+   Definitions
+      At line 75 in file Q1ARM.s
+   Uses
+      At line 16 in file Q1ARM.s
+Comment: ARRAY used once
+constdata 00000000
+
+Symbol: constdata
+   Definitions
+      At line 74 in file Q1ARM.s
+   Uses
+      None
+Comment: constdata unused
+2 symbols
+347 symbols in table
