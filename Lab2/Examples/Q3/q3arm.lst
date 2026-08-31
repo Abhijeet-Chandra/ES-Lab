@@ -1,0 +1,169 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;Write an assembly program to multiply two 32 bit number
+                       s 
+    2 00000000                 AREA             RESET, DATA, READONLY
+    3 00000000                 EXPORT           __Vectors
+    4 00000000         
+    5 00000000         __Vectors
+    6 00000000 10001000        DCD              0x10001000  ; stack pointer val
+                                                            ue when stack is em
+                                                            pty
+    7 00000004 00000000        DCD              Reset_Handler ; reset vector
+    8 00000008         
+    9 00000008                 ALIGN
+   10 00000008         
+   11 00000008                 AREA             mycode, CODE, READONLY
+   12 00000000                 ENTRY
+   13 00000000                 EXPORT           Reset_Handler
+   14 00000000         
+   15 00000000         Reset_Handler
+   16 00000000         
+   17 00000000 4804            LDR              R0, =NUM1
+   18 00000002 4905            LDR              R1, =NUM2
+   19 00000004 4E05            LDR              R6, =RESULT
+   20 00000006         
+   21 00000006 6802            LDR              R2, [R0]
+   22 00000008 680B            LDR              R3, [R1]
+   23 0000000A         
+   24 0000000A FBA2 4503       UMULL            R4, R5, R2, R3
+   25 0000000E         
+   26 0000000E 6034            STR              R4, [R6]
+   27 00000010 6075            STR              R5, [R6, #4]
+   28 00000012         
+   29 00000012         STOP
+   30 00000012 E7FE            B                STOP
+   31 00000014         
+   32 00000014 00000000 
+              00000000 
+              00000000         AREA             mydata, DATA, READWRITE
+   33 00000000         RESULT
+   34 00000000 00 00 00 
+              00 00 00 
+              00 00            SPACE            8
+   35 00000008         
+   36 00000008                 AREA             constdata, DATA, READONLY
+   37 00000000         NUM1
+   38 00000000 12345678        DCD              0x12345678
+   39 00000004         
+   40 00000004         NUM2
+   41 00000004 12345678        DCD              0x12345678
+   42 00000008         
+   43 00000008                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\q3arm.
+d -o.\q3arm.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\
+Inc\NXP\LPC17xx --predefine="__EVAL SETA 1" --list=.\q3arm.lst Q3ARM.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 2 in file Q3ARM.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 5 in file Q3ARM.s
+   Uses
+      At line 3 in file Q3ARM.s
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 15 in file Q3ARM.s
+   Uses
+      At line 7 in file Q3ARM.s
+      At line 13 in file Q3ARM.s
+
+STOP 00000012
+
+Symbol: STOP
+   Definitions
+      At line 29 in file Q3ARM.s
+   Uses
+      At line 30 in file Q3ARM.s
+Comment: STOP used once
+mycode 00000000
+
+Symbol: mycode
+   Definitions
+      At line 11 in file Q3ARM.s
+   Uses
+      None
+Comment: mycode unused
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESULT 00000000
+
+Symbol: RESULT
+   Definitions
+      At line 33 in file Q3ARM.s
+   Uses
+      At line 19 in file Q3ARM.s
+Comment: RESULT used once
+mydata 00000000
+
+Symbol: mydata
+   Definitions
+      At line 32 in file Q3ARM.s
+   Uses
+      None
+Comment: mydata unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+NUM1 00000000
+
+Symbol: NUM1
+   Definitions
+      At line 37 in file Q3ARM.s
+   Uses
+      At line 17 in file Q3ARM.s
+Comment: NUM1 used once
+NUM2 00000004
+
+Symbol: NUM2
+   Definitions
+      At line 40 in file Q3ARM.s
+   Uses
+      At line 18 in file Q3ARM.s
+Comment: NUM2 used once
+constdata 00000000
+
+Symbol: constdata
+   Definitions
+      At line 36 in file Q3ARM.s
+   Uses
+      None
+Comment: constdata unused
+3 symbols
+343 symbols in table
