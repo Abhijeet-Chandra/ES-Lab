@@ -1,4 +1,5 @@
-        AREA RESET, DATA, READONLY
+; GCD of two numbers        
+		AREA RESET, DATA, READONLY
         EXPORT __Vectors
 
 __Vectors
