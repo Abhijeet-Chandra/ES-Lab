@@ -1,0 +1,215 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             RESET, DATA, READONLY
+    2 00000000                 EXPORT           __Vectors
+    3 00000000         
+    4 00000000         __Vectors
+    5 00000000 10001000        DCD              0x10001000  ; Initial stack poi
+                                                            nter
+    6 00000004 00000000        DCD              Reset_Handler ; Reset vector
+    7 00000008         
+    8 00000008                 ALIGN
+    9 00000008         
+   10 00000008                 AREA             mycode, CODE, READONLY
+   11 00000000                 ENTRY
+   12 00000000                 EXPORT           Reset_Handler
+   13 00000000         
+   14 00000000         Reset_Handler
+   15 00000000         
+   16 00000000 4808            LDR              R0, =NUM1
+   17 00000002 4909            LDR              R1, =NUM2
+   18 00000004 4D09            LDR              R5, =RESULT
+   19 00000006 6802            LDR              R2, [R0]    ;a
+   20 00000008 680B            LDR              R3, [R1]    ;b
+   21 0000000A         LOOP
+   22 0000000A 429A            CMP              R2, R3      ; a>b?
+   23 0000000C         
+   24 0000000C D801            BHI              B1
+   25 0000000E         
+   26 0000000E D303            BLO              B2
+   27 00000010         
+   28 00000010 D005            BEQ              DONE
+   29 00000012         
+   30 00000012         B1
+   31 00000012 EBA2 0203       SUB              R2, R2, R3
+   32 00000016 E7F8            B                LOOP
+   33 00000018         B2
+   34 00000018 EBA3 0302       SUB              R3, R3, R2
+   35 0000001C E7F5            B                LOOP
+   36 0000001E         
+   37 0000001E         DONE
+   38 0000001E 602A            STR              R2, [R5]
+   39 00000020         
+   40 00000020         STOP
+   41 00000020 E7FE            B                STOP
+   42 00000022         
+   43 00000022 00 00 00000000 
+              00000000 
+              00000000         AREA             mydata, DATA, READWRITE
+   44 00000000         RESULT
+   45 00000000 00 00 00 
+              00               SPACE            4
+   46 00000004         
+   47 00000004                 AREA             constdata, DATA, READONLY
+   48 00000000         NUM1
+   49 00000000 0000000C        DCD              12
+   50 00000004         NUM2
+   51 00000004 00000004        DCD              4
+   52 00000008         
+   53 00000008                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\q3arm.
+d -o.\q3arm.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+Inc\NXP\LPC17xx --predefine="__EVAL SETA 1" --list=.\q3arm.lst Q3ARM.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 1 in file Q3ARM.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 4 in file Q3ARM.s
+   Uses
+      At line 2 in file Q3ARM.s
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+B1 00000012
+
+Symbol: B1
+   Definitions
+      At line 30 in file Q3ARM.s
+   Uses
+      At line 24 in file Q3ARM.s
+Comment: B1 used once
+B2 00000018
+
+Symbol: B2
+   Definitions
+      At line 33 in file Q3ARM.s
+   Uses
+      At line 26 in file Q3ARM.s
+Comment: B2 used once
+DONE 0000001E
+
+Symbol: DONE
+   Definitions
+      At line 37 in file Q3ARM.s
+   Uses
+      At line 28 in file Q3ARM.s
+Comment: DONE used once
+LOOP 0000000A
+
+Symbol: LOOP
+   Definitions
+      At line 21 in file Q3ARM.s
+   Uses
+      At line 32 in file Q3ARM.s
+      At line 35 in file Q3ARM.s
+
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 14 in file Q3ARM.s
+   Uses
+      At line 6 in file Q3ARM.s
+      At line 12 in file Q3ARM.s
+
+STOP 00000020
+
+Symbol: STOP
+   Definitions
+      At line 40 in file Q3ARM.s
+   Uses
+      At line 41 in file Q3ARM.s
+Comment: STOP used once
+mycode 00000000
+
+Symbol: mycode
+   Definitions
+      At line 10 in file Q3ARM.s
+   Uses
+      None
+Comment: mycode unused
+7 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESULT 00000000
+
+Symbol: RESULT
+   Definitions
+      At line 44 in file Q3ARM.s
+   Uses
+      At line 18 in file Q3ARM.s
+Comment: RESULT used once
+mydata 00000000
+
+Symbol: mydata
+   Definitions
+      At line 43 in file Q3ARM.s
+   Uses
+      None
+Comment: mydata unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+NUM1 00000000
+
+Symbol: NUM1
+   Definitions
+      At line 48 in file Q3ARM.s
+   Uses
+      At line 16 in file Q3ARM.s
+Comment: NUM1 used once
+NUM2 00000004
+
+Symbol: NUM2
+   Definitions
+      At line 50 in file Q3ARM.s
+   Uses
+      At line 17 in file Q3ARM.s
+Comment: NUM2 used once
+constdata 00000000
+
+Symbol: constdata
+   Definitions
+      At line 47 in file Q3ARM.s
+   Uses
+      None
+Comment: constdata unused
+3 symbols
+347 symbols in table

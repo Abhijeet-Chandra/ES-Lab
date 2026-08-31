@@ -1,0 +1,195 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;Find the sum of ‘n’ natural numbers using MLA instructi
+                       on.
+    2 00000000                 AREA             RESET, DATA, READONLY
+    3 00000000                 EXPORT           __Vectors
+    4 00000000         
+    5 00000000         __Vectors
+    6 00000000 10001000        DCD              0x10001000  ; Initial stack poi
+                                                            nter
+    7 00000004 00000000        DCD              Reset_Handler ; Reset vector
+    8 00000008         
+    9 00000008                 ALIGN
+   10 00000008         
+   11 00000008                 AREA             mycode, CODE, READONLY
+   12 00000000                 ENTRY
+   13 00000000                 EXPORT           Reset_Handler
+   14 00000000         
+   15 00000000         Reset_Handler
+   16 00000000         
+   17 00000000 4807            LDR              R0, =ARRAY
+   18 00000002 4908            LDR              R1, =N
+   19 00000004 680A            LDR              R2, [R1]
+   20 00000006 F04F 0300       MOV              R3, #0
+   21 0000000A F04F 0401       MOV              R4, #1
+   22 0000000E 4E06            LDR              R6, =RESULT
+   23 00000010         LOOP
+   24 00000010         
+   25 00000010 F850 5B04       LDR              R5, [R0], #4
+   26 00000014         
+   27 00000014 FB05 3304       MLA              R3, R5, R4, R3
+   28 00000018         
+   29 00000018 1E52            SUBS             R2, R2, #1
+   30 0000001A         
+   31 0000001A D1F9            BNE              LOOP
+   32 0000001C         
+   33 0000001C 6033            STR              R3, [R6]
+   34 0000001E         
+   35 0000001E         STOP
+   36 0000001E E7FE            B                STOP
+   37 00000020         
+   38 00000020 00000000 
+              00000000 
+              00000000         AREA             mydata, DATA, READWRITE
+   39 00000000         RESULT
+   40 00000000 00 00 00 
+              00               SPACE            4
+   41 00000004         
+   42 00000004                 AREA             constdata, DATA, READONLY
+   43 00000000         ARRAY
+   44 00000000 00000001 
+              00000002 
+              00000003 
+              00000004 
+              00000005 
+              00000006 
+              00000007 
+              00000008 
+              00000009 
+              0000000A         DCD              1,2,3,4,5,6,7,8,9,10
+   45 00000028         N
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   46 00000028 0000000A        DCD              10
+   47 0000002C         
+   48 0000002C                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\q2arm.
+d -o.\q2arm.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\
+Inc\NXP\LPC17xx --predefine="__EVAL SETA 1" --list=.\q2arm.lst Q2ARM.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 2 in file Q2ARM.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 5 in file Q2ARM.s
+   Uses
+      At line 3 in file Q2ARM.s
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+LOOP 00000010
+
+Symbol: LOOP
+   Definitions
+      At line 23 in file Q2ARM.s
+   Uses
+      At line 31 in file Q2ARM.s
+Comment: LOOP used once
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 15 in file Q2ARM.s
+   Uses
+      At line 7 in file Q2ARM.s
+      At line 13 in file Q2ARM.s
+
+STOP 0000001E
+
+Symbol: STOP
+   Definitions
+      At line 35 in file Q2ARM.s
+   Uses
+      At line 36 in file Q2ARM.s
+Comment: STOP used once
+mycode 00000000
+
+Symbol: mycode
+   Definitions
+      At line 11 in file Q2ARM.s
+   Uses
+      None
+Comment: mycode unused
+4 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESULT 00000000
+
+Symbol: RESULT
+   Definitions
+      At line 39 in file Q2ARM.s
+   Uses
+      At line 22 in file Q2ARM.s
+Comment: RESULT used once
+mydata 00000000
+
+Symbol: mydata
+   Definitions
+      At line 38 in file Q2ARM.s
+   Uses
+      None
+Comment: mydata unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+ARRAY 00000000
+
+Symbol: ARRAY
+   Definitions
+      At line 43 in file Q2ARM.s
+   Uses
+      At line 17 in file Q2ARM.s
+Comment: ARRAY used once
+N 00000028
+
+Symbol: N
+   Definitions
+      At line 45 in file Q2ARM.s
+   Uses
+      At line 18 in file Q2ARM.s
+Comment: N used once
+constdata 00000000
+
+Symbol: constdata
+   Definitions
+      At line 42 in file Q2ARM.s
+   Uses
+      None
+Comment: constdata unused
+3 symbols
+344 symbols in table
