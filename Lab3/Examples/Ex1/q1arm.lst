@@ -23,7 +23,7 @@ ARM Macro Assembler    Page 1
    14 00000000         Reset_Handler
    15 00000000         
    16 00000000 480F            LDR              R0,=NUM1
-   17 00000002 6801            LDR              R1,[R0]
+   17 00000002 8801            LDRH             R1,[R0]
    18 00000004 4D0F            LDR              R5, =RESULT
    19 00000006         ;extract lower nibble:
    20 00000006 F04F 020F       MOV              R2, #0x0F
@@ -80,9 +80,9 @@ ARM Macro Assembler    Page 2
    62 00000008         
    63 00000008                 AREA             constdata, DATA, READONLY
    64 00000000         NUM1
-   65 00000000 00000021        DCD              0x21
-   66 00000004         
-   67 00000004                 END
+   65 00000000 21 00           DCW              0x21
+   66 00000002         
+   67 00000002                 END
 Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\q1arm.
 d -o.\q1arm.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\
 Inc\NXP\LPC17xx --predefine="__EVAL SETA 1" --list=.\q1arm.lst Q1ARM.s

@@ -14,7 +14,7 @@ __Vectors
 Reset_Handler
 		
 		LDR		R0,=NUM1
-		LDR		R1,[R0]
+		LDRH		R1,[R0]
 		LDR		R5, =RESULT
 		;extract lower nibble:
 		MOV		R2, #0x0F
@@ -62,6 +62,6 @@ RESULT
 		
 		AREA	constdata, DATA, READONLY
 NUM1
-		DCD		0x21
+		DCW		0x21
 			
 		END
