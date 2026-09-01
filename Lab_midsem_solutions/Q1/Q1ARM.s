@@ -1,4 +1,6 @@
-        AREA RESET, DATA, READONLY
+; a) Write a function to convert a 2 digit hexadecimal no. to ascii value
+; b) Using the above function, convert an array of 10 2-digit hexadecimal numbers into ascii characters
+		AREA RESET, DATA, READONLY
         EXPORT __Vectors
 
 __Vectors
