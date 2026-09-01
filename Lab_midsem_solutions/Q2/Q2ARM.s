@@ -1,4 +1,8 @@
-        AREA RESET, DATA, READONLY
+# Read an array of 5 16 bit hexadecimal numbers.
+# Function to sum the digits of a 16 bit hexadecimal number
+# And read that sum and write it as bcd(another func)
+
+		AREA RESET, DATA, READONLY
         EXPORT __Vectors
 
 __Vectors
