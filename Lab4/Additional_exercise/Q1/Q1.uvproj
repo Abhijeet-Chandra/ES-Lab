@@ -45,7 +45,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\</OutputDirectory>
-          <OutputName>insertion_sort</OutputName>
+          <OutputName>Q1</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -404,13 +404,6 @@
       <Groups>
         <Group>
           <GroupName>Source Group 1</GroupName>
-          <Files>
-            <File>
-              <FileName>insertion_sort_ARM.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\insertion_sort_ARM.s</FilePath>
-            </File>
-          </Files>
         </Group>
       </Groups>
     </Target>
